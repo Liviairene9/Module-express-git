@@ -1,0 +1,27 @@
+{
+  "name": "lumia-products-api",
+  "version": "1.0.0",
+  "description": "API REST pour la gestion du catalogue de produits (parfums & accessoires) - Lumia & Accessories",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": ["express", "typescript", "rest-api", "zod"],
+  "author": "Livia",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "zod": "^3.23.8",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.9",
+    "@types/uuid": "^9.0.8",
+    "typescript": "^5.5.3",
+    "tsx": "^4.16.2"
+  }
+}
