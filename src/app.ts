@@ -1,11 +1,14 @@
 import express from "express";
 import { productRouter } from "./routes/productRoutes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swagger";
 
 export function createApp() {
   const app = express();
 
   app.use(express.json());
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   app.get("/health", (_req, res) => {
     res.status(200).json({ status: "ok" });

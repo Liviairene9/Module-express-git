@@ -10,10 +10,44 @@ import { AppError, asyncHandler } from "../utils/AppError";
 export const productRouter = Router();
 
 /**
- * GET /products
- * Liste paginée des produits, avec filtre optionnel par catégorie.
- * Query params : page (défaut 1), limit (défaut 10, max 100), category
+ * @openapi
+ * /products:
+ *   get:
+ *     summary: Liste paginée des produits
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer }
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer }
+ *       - in: query
+ *         name: category
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Liste paginée
+ *   post:
+ *     summary: Créer un produit
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name: { type: string }
+ *               description: { type: string }
+ *               price: { type: number }
+ *               category: { type: string }
+ *               stock: { type: integer }
+ *     responses:
+ *       201:
+ *         description: Produit créé
+ *       400:
+ *         description: Corps invalide
  */
+
 productRouter.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -41,11 +75,42 @@ productRouter.get(
     });
   })
 );
-
 /**
- * GET /products/:id
- * Détail d'un produit.
+ * @openapi
+ * /products/{id}:
+ *   get:
+ *     summary: Détail d'un produit
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200: { description: OK }
+ *       404: { description: Introuvable }
+ *   put:
+ *     summary: Mise à jour partielle
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200: { description: OK }
+ *       404: { description: Introuvable }
+ *   delete:
+ *     summary: Supprimer un produit
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       204: { description: Supprimé }
+ *       404: { description: Introuvable }
  */
+
+
 productRouter.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -54,7 +119,7 @@ productRouter.get(
       throw AppError.notFound(`Produit ${req.params.id} introuvable`);
     }
     res.status(200).json({ data: product });
-  })
+  }) 
 );
 
 /**
